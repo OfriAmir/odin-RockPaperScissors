@@ -38,35 +38,51 @@ function playGame(){
         let computerChoice = getComputerChoice();
         let humanChoice = userChoice
         if (computerChoice === humanChoice) {
-            console.log(`It's a tie! both players chose ${humanChoice}. Your score is ${humanScore}, computer score is ${computerScore}.`);
+            paraComment.textContent = `It's a tie! both players chose ${humanChoice}.`
             totalRounds++
         } else if (computerChoice === 'rock' && humanChoice === 'scissors' || computerChoice === 'paper' && humanChoice === 'rock' || computerChoice === 'scissors' && humanChoice === 'Paper') {
             computerScore += 1;
             totalRounds++
-            console.log(`Computer won this round! ${computerChoice} beats ${humanChoice}. Your score is ${humanScore}, computer score is ${computerScore}.` );
+            paraComment.textContent = `Computer won this round! ${computerChoice} beats ${humanChoice}.`
         } else {
             humanScore += 1;
             totalRounds++
-            console.log(`You won this round! ${humanChoice} beats ${computerChoice}. Your score is ${humanScore}, computer score is ${computerScore}.`);
+            paraComment.textContent = `You won this round! ${humanChoice} beats ${computerChoice}.`
+
         }
+        resultsDiv.textContent = `You ${humanScore}:${computerScore} Computer`
     }
+    let gameOver = false
     let userChoice
     const buttons = document.querySelectorAll("button")
+    const paraComment = document.createElement("p")
+    const paraEndGame = document.createElement("p")
+    paraEndGame.setAttribute("style", 'white-space: pre;')
+    const thankYou = `\r\n\r\nTHANK YOU FOR PLAYING! THIS GAME IS ABOUT PURE LUCK SO YOU WASTED YOU'RE TIME ACTUALLY BUT YEAH.`
+    const resultsDiv = document.createElement("div")
+    const body = document.querySelector("body")
+    body.appendChild(paraComment)
+    body.appendChild(resultsDiv)
+    body.appendChild(paraEndGame)
+    paraComment.textContent = "hello?"
     buttons.forEach(button => {
-        button.addEventListener("click", (e) => {
-            userChoice = e.target.id
-            playRound(userChoice)
-            if (totalRounds === 5){
-                if (humanScore > computerScore) {
-                    console.log(`You won the game! it's ${humanScore}:${computerScore} to your favor!`);
-                } else if (humanScore < computerScore) {
-                    console.log(`You lost! it's ${computerScore}:${humanScore} to the computer's favor.`);
-                } else {
-                    console.log(`The game ended in a tie! it's ${computerScore}:${humanScore}.`);
+        //while (!gameOver) {
+            button.addEventListener("click", (e) => {
+                userChoice = e.target.id
+                playRound(userChoice)
+                if (totalRounds === 5){
+                    if (humanScore > computerScore) {
+                        paraEndGame.textContent = `You won the game! ${thankYou}`
+                    } else if (humanScore < computerScore) {
+                        paraEndGame.textContent = `You lost! ${thankYou}`
+                    } else {
+                        paraEndGame.textContent = `The game ended in a tie! ${thankYou}`    
+                    }
+                    gameOver = true
+                
                 }
-                console.log(`THANK YOU FOR PLAYING! THIS GAME IS ABOUT PURE LUCK SO YOU WASTED YOU'RE TIME ACTUALLY BUT YEAH.`)
-            }
-        })
+            })
+        //}
     })
 }
 
