@@ -27,12 +27,31 @@ function getHumanChoice(){
 }
 
 
-
+const restartBtn = document.createElement("button")
+const body = document.querySelector("body")
+const buttons = document.querySelectorAll("button")
+const paraComment = document.createElement("p")
+const paraEndGame = document.createElement("p")
+const resultsDiv = document.createElement("div")
 function playGame(){
-    //alert(`if you just entered the game, press OK, then Cancel, then f12 and then restart. the game will be shown in the dev tools console. I don't know yet how to solve this otherwise.`)
     let totalRounds = 0
     let computerScore = 0;
     let humanScore = 0;
+    let gameOver = false
+    let userChoice
+    const thankYou = `\r\n\r\nTHANK YOU FOR PLAYING! THIS GAME IS ABOUT PURE LUCK SO YOU WASTED YOU'RE TIME ACTUALLY BUT YEAH.`
+    paraComment.setAttribute("style", 'white-space: pre;')
+    paraEndGame.setAttribute("style", 'white-space: pre;')
+    body.appendChild(paraComment)
+    body.appendChild(resultsDiv)
+    body.appendChild(paraEndGame)
+    restartBtn.textContent = "Play Again"
+    paraComment.textContent = `Hello! you're playing ROCK PAPER SCISSORS. these are the rules:
+You're playing against the computer. every round, you should pick your
+choice - rock, paper or scissors. Rock beats scissors, paper beats rock
+and scissors beat paper.If both you and the computer choose the same,
+it's a tie. The game is 5 rounds.\r\n\r\nGood luck!`
+
     function playRound(userChoice){
 
         let computerChoice = getComputerChoice();
@@ -52,22 +71,11 @@ function playGame(){
         }
         resultsDiv.textContent = `You ${humanScore}:${computerScore} Computer`
     }
-    let gameOver = false
-    let userChoice
-    const buttons = document.querySelectorAll("button")
-    const paraComment = document.createElement("p")
-    const paraEndGame = document.createElement("p")
-    paraEndGame.setAttribute("style", 'white-space: pre;')
-    const thankYou = `\r\n\r\nTHANK YOU FOR PLAYING! THIS GAME IS ABOUT PURE LUCK SO YOU WASTED YOU'RE TIME ACTUALLY BUT YEAH.`
-    const resultsDiv = document.createElement("div")
-    const body = document.querySelector("body")
-    body.appendChild(paraComment)
-    body.appendChild(resultsDiv)
-    body.appendChild(paraEndGame)
-    paraComment.textContent = "hello?"
+
+    
     buttons.forEach(button => {
-        //while (!gameOver) {
             button.addEventListener("click", (e) => {
+                if (gameOver) return
                 userChoice = e.target.id
                 playRound(userChoice)
                 if (totalRounds === 5){
@@ -79,11 +87,18 @@ function playGame(){
                         paraEndGame.textContent = `The game ended in a tie! ${thankYou}`    
                     }
                     gameOver = true
+                    body.appendChild(restartBtn)
                 
                 }
             })
-        //}
     })
 }
 
 playGame()
+restartBtn.addEventListener("click", (e) => {
+    paraComment.textContent = ""
+    paraEndGame.textContent = ""
+    resultsDiv.textContent = ""
+    body.removeChild(e.target) 
+    playGame()
+})
