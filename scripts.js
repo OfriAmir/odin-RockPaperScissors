@@ -30,7 +30,7 @@ function getHumanChoice(){
 const restartBtn = document.createElement("button")
 const body = document.querySelector("body")
 const buttons = document.querySelectorAll("button")
-const paraComment = document.createElement("p")
+const paraComment = document.querySelector("p")
 const paraEndGame = document.createElement("p")
 const resultsDiv = document.createElement("div")
 function playGame(){
@@ -40,18 +40,11 @@ function playGame(){
     let gameOver = false
     let userChoice
     const thankYou = `\r\n\r\nTHANK YOU FOR PLAYING! THIS GAME IS ABOUT PURE LUCK SO YOU WASTED YOU'RE TIME ACTUALLY BUT YEAH.`
-    paraComment.setAttribute("style", 'white-space: pre;')
     paraEndGame.setAttribute("style", 'white-space: pre;')
     body.appendChild(paraComment)
     body.appendChild(resultsDiv)
     body.appendChild(paraEndGame)
     restartBtn.textContent = "Play Again"
-    paraComment.textContent = `Hello! you're playing ROCK PAPER SCISSORS. these are the rules:
-You're playing against the computer. every round, you should pick your
-choice - rock, paper or scissors. Rock beats scissors, paper beats rock
-and scissors beat paper.If both you and the computer choose the same,
-it's a tie. The game is 5 rounds.\r\n\r\nGood luck!`
-
     function playRound(userChoice){
 
         let computerChoice = getComputerChoice();
